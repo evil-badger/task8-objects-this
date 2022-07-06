@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task8</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="article">
+        <p class="universe starColor">ДЗ 8. Область видимости. Контекст выполнения. this</p>
+        <div class="grid">
+            <button class="myButton" onclick="triangle()">1.Обьект Треугольник, результат свойств обьекта</button>
+            <button class="myButton" onclick="calc()">2.Объект calculator</button>
+            <button class="myButton" onclick="country()">3.Объект country</button>
+            <button class="myButton" onclick="test()">4.Тест фрагмента кода</button>
+        </div>
+    </div>
+
+    <script>
+
+        function triangle(){
+        /* Initial object */
+            let triangle = {
+                aSide: 0,
+                bSide: 0,
+                cSide: 0,
+                setValues: function() { 
+                    triangle.aSide=prompt('сторона А');
+                    triangle.bSide=prompt('сторона B');
+                    triangle.cSide=prompt('сторона C');
+                    return console.log(`${triangle.aSide} ${triangle.bSide} ${triangle.cSide}`);
+                },
+                getPerimeter: function() { 
+                    let sum=parseInt(triangle.aSide)+parseInt(triangle.bSide)+parseInt(triangle.cSide);
+                    return sum;
+                },
+                isEqualSides: function() { 
+                    return triangle.aSide==triangle.bSide&&triangle.bSide==triangle.cSide&&triangle.aSide==triangle.cSide;
+                },
+            }
+
+            triangle.setValues(); // for examle 3 3 3
+            console.log(triangle.getPerimeter()); // 9
+            console.log(triangle.isEqualSides()); // true
+        }
+
+        function calc(){
+            let calculator = {
+                x:0,
+                y:0,
+                read:function(){//read() запрашивает prompt() для двух значений и сохраняет их как свойства объекта x, y
+                    calculator.x=parseInt(prompt('число Х'));
+                    calculator.y=parseInt(prompt('число У'));
+                    return console.log(`${calculator.x} ${calculator.y}`);
+                },
+                sum:function(){//sum() возвращает сумму этих двух значений
+                    return calculator.x+calculator.y;
+                },
+                multi:function(){//multi() возвращает произведение этих двух значений
+                    return calculator.x*calculator.y;
+                },
+                diff:function(){//diff() возвращает разницу
+                    return calculator.x/calculator.y;
+                },
+                div:function(){//div() возвращает частное
+                    return calculator.x%calculator.y;
+                },
+            }
+
+            calculator.read(); // for example 5 2
+            console.log(calculator.sum()); // 7
+            console.log(calculator.multi()); // 3
+            console.log(calculator.diff());
+            console.log(calculator.div());
+        }
+
+        function country(){
+            var country = {
+                name: 'Ukraine',
+                language: 'ukrainian',
+                capital: {
+                    name: 'Kyiv',
+                    population: 2907817,
+                    area: 847.66
+                }
+            };
+
+            function format(start, end) {
+                console.log(start + this.name + end);
+            }
+
+            format.call(country,'',''); // Ukraine
+            format.apply(country,['[',']']); // [Ukraine]
+            format.call(country.capital,'',''); // Kyiv
+            format.apply(country.capital,['','']); // Kyiv
+            format.apply(country.foreign,['']); // undefined
+        }
+
+        function test(){
+            var text = 'outside';
+            function logIt(){
+                console.log(text);
+                var text = 'inside';
+                console.log(text);
+            };
+            logIt();
+        }
+    </script>
+</body>
+</html>
