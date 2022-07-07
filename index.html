@@ -15,6 +15,7 @@
             <button class="myButton" onclick="calc()">2.Объект calculator</button>
             <button class="myButton" onclick="country()">3.Объект country</button>
             <button class="myButton" onclick="test()">4.Тест фрагмента кода</button>
+            <button class="myButton" onclick="copyObjects()">5.Глубокое копирование обьекта</button>
         </div>
     </div>
 
@@ -107,6 +108,59 @@
             };
             logIt();
         }
+
+        function copyObjects(){
+            const object = {
+                a: 5,
+                b: { 
+                        g: 8, y: 9, t: { 
+                                            q: 48 
+                                        } 
+                    },
+                x: 47
+
+            }
+            let arrayOneDimention=[1,2,3,4,5,6,7];
+            let arrayTest=[1,2,3,4[5,6,7,8[9,10,11,12]]];
+            console.log(`Исходный одномерный массив=>${arrayOneDimention}`);
+            console.log(`Исходный массив с вложениями=>${arrayTest}`);
+            console.log(`Исходный обьект=>${object}`);
+
+            //прямое копирование каждого уровня вложености
+            let newObj={...object};//копирование нового экземпляра
+            newObj.b={...object.b};//копирование вложения уровня 1
+            newObj.b.t={...object.b.t};//копирование вложения уровня 2
+            console.log('проверка оригинала');
+            console.log(object);
+            console.log('проверка копии');
+            console.log(newObj); 
+            
+            newObj.b.g=28; //перезапись копии
+            newObj.b.t=function print(){return 'is manual method'}; //перезапись копии
+            console.log('проверка оригинала после перезаписи');
+            console.log(object);
+            console.log('проверка копии после перезаписи');
+            console.log(newObj); 
+
+            ////пробное копирование через json
+            let newObj2 = JSON.parse(JSON.stringify(object));
+            console.log('проверка оригинала');
+            console.log(object);
+            console.log('проверка копии json');
+            console.log(newObj2);
+            ///перезапись копии
+            newObj.b.y=29; //перезапись копии
+            newObj.b.t=function print(){return 'is JSON method'};
+            console.log('проверка оригинала после перезаписи');
+            console.log(object);
+            console.log('проверка копии json после перезаписи');
+            console.log(newObj2);
+        
+        }
+
+        
+  
+        
     </script>
 </body>
 </html>
